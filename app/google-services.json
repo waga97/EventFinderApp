@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "590936302930",
+    "firebase_url": "https://project-27deb.firebaseio.com",
+    "project_id": "project-27deb",
+    "storage_bucket": "project-27deb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590936302930:android:1ee117a3e4099923",
+        "android_client_info": {
+          "package_name": "com.example.arshad.uea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590936302930-v4grf37cmpfed1osevb6bua8p710flkd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.arshad.uea",
+            "certificate_hash": "cf1432497c36231659dcff0a120c842ac9e2d6b1"
+          }
+        },
+        {
+          "client_id": "590936302930-fi2806ungo7pe37backj4arnpr7ldopk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs-i02SfzRD46_DI7MraWMcRY_JYPGhlk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590936302930-fi2806ungo7pe37backj4arnpr7ldopk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
