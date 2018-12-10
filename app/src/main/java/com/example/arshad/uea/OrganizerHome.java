@@ -23,7 +23,7 @@ public class OrganizerHome extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
 
     private Button createBtn;
-    private Button sampleBtn;
+
 
     private Toolbar organizerToolbar;
 
@@ -60,13 +60,7 @@ public class OrganizerHome extends AppCompatActivity {
         });
 
 
-        sampleBtn = (Button) findViewById(R.id.sample_btn);
-        sampleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendToSample();
-            }
-        });
+
 
 
 
@@ -140,12 +134,7 @@ public class OrganizerHome extends AppCompatActivity {
         finish();
     }
 
-    private void  sendToSample (){
 
-        Intent sampleintent = new Intent(OrganizerHome.this, OrganizerSample.class);
-        startActivity(sampleintent);
-        finish();
-    }
 
 
 }

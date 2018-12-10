@@ -3,10 +3,14 @@ package com.example.arshad.uea;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText emailEt;
     private EditText passwordEt;
 
+    private Toolbar mainToolbar;
+
     private Button loginBtn;
 
     private ProgressBar loginProg;
@@ -43,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mainToolbar);
+        getSupportActionBar().setTitle("             UNITEN EVENT APPLICATION");
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -116,6 +127,33 @@ public class MainActivity extends AppCompatActivity {
 
                 });
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_about:
+
+                Intent settingsIntent = new Intent(MainActivity.this, About.class);
+                startActivity(settingsIntent);
+                return true;
+
+            default:
+                return false;
+
+
+        }
 
     }
 

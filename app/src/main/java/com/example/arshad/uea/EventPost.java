@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class EventPost extends EventPostId {
 
-    public String user_id, name, date, time, image_url;
+    public String user_id, name, date, time, venue, desc,image_url;
     public Date timestamp;
 
     public EventPost() {}
@@ -60,11 +60,29 @@ public class EventPost extends EventPostId {
         this.timestamp = timestamp;
     }
 
-    public EventPost(String user_id, String name, String date, String time, String image_url, Date timestamp) {
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public EventPost(String user_id, String name, String date, String time, String venue, String desc, String image_url, Date timestamp) {
         this.user_id = user_id;
         this.name = name;
         this.date = date;
         this.time = time;
+        this.venue = venue;
+        this.desc = desc;
         this.image_url = image_url;
         this.timestamp = timestamp;
     }

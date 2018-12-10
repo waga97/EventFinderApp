@@ -137,7 +137,7 @@ public class StudentHome extends AppCompatActivity {
 
     private void  sendToMain (){
 
-        Intent logoutintent = new Intent(StudentHome.this, MainActivity.class);
+        Intent logoutintent = new Intent(StudentHome.this, SplashScreen.class);
         startActivity(logoutintent);
         finish();
     }

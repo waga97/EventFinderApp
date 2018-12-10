@@ -55,6 +55,9 @@ public class OrganizerCreate extends AppCompatActivity {
     private EditText eventName;
     private EditText eventDate;
     private EditText eventTime;
+    private EditText eventVenue;
+    private EditText eventScorun;
+    private EditText eventDesc;
     private Button createBtn;
 
     private Uri postImageUri = null;
@@ -89,6 +92,9 @@ public class OrganizerCreate extends AppCompatActivity {
         eventName = findViewById(R.id.event_name_et);
         eventDate = findViewById(R.id.event_date_et);
         eventTime = findViewById(R.id.event_time_et);
+        eventVenue = findViewById(R.id.event_venue_et);
+        eventScorun = findViewById(R.id.event_scorun_et);
+        eventDesc = findViewById(R.id.event_desc_et);
         eventImage = findViewById(R.id.event_image);
         createBtn = findViewById(R.id.create_btn);
         createProg = findViewById(R.id.create_prog);
@@ -109,8 +115,11 @@ public class OrganizerCreate extends AppCompatActivity {
                 final String name = eventName.getText().toString();
                 final String date = eventDate.getText().toString();
                 final String time = eventTime.getText().toString();
+                final String venue = eventVenue.getText().toString();
+                final String scorun = eventScorun.getText().toString();
+                final String desc = eventDesc.getText().toString();
 
-                if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && postImageUri != null){
+                if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) &&!TextUtils.isEmpty(venue) &&!TextUtils.isEmpty(scorun) &&!TextUtils.isEmpty(desc) && postImageUri != null){
                     createProg.setVisibility(View.VISIBLE);
 
                     StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
@@ -126,6 +135,9 @@ public class OrganizerCreate extends AppCompatActivity {
                             postMap.put("name", name);
                             postMap.put("date", date);
                             postMap.put("time", time);
+                            postMap.put("venue", venue);
+                            postMap.put("scorun", scorun);
+                            postMap.put("desc", desc);
                             postMap.put("user_id", current_user_id);
                             postMap.put("timestamp", FieldValue.serverTimestamp());
 

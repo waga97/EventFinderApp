@@ -78,6 +78,14 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         String time_data = event_list.get(position).getTime();
         holder.setTimeText(time_data);
 
+        String venue_data = event_list.get(position).getVenue();
+        holder.setVenueText(venue_data);
+
+        String desc_data = event_list.get(position).getDesc();
+        holder.setDescText(desc_data);
+
+
+
         String image_url = event_list.get(position).getImage_url();
         holder.setEventImage(image_url);
 
@@ -138,6 +146,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         private TextView nameView;
         private TextView dateView;
         private TextView timeView;
+        private TextView venueView;
+        private TextView descView;
+
         private TextView eventDate;
 
         private TextView eventUserName;
@@ -188,6 +199,21 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
 
             eventDate = mView.findViewById(R.id.event_post_date);
             eventDate.setText(date);
+
+        }
+
+        public void setVenueText(String venueText){
+
+            venueView = mView.findViewById(R.id.event_venue);
+            venueView.setText(venueText);
+
+        }
+
+
+        public void setDescText(String descText) {
+
+            descView = mView.findViewById(R.id.event_desc);
+            descView.setText(descText);
 
         }
 

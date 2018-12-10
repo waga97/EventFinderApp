@@ -35,9 +35,14 @@
         <activity
             android:name=".OrganizerCreate"
             android:screenOrientation="portrait" />
-        <activity android:name=".OrganizerAccount" />
-        <activity android:name=".StudentScorun" />
-        <activity android:name=".OrganizerSample"></activity>
+        <activity
+            android:name=".OrganizerAccount"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StudentScorun"
+            android:screenOrientation="portrait" />
+        <activity android:name=".OrganizerSample" />
+        <activity android:name=".About"></activity>
     </application>
 
 </manifest>
