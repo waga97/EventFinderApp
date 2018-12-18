@@ -1,17 +1,15 @@
 package com.example.arshad.uea;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Point;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,17 +23,11 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.ViewHolder> {
 
@@ -124,6 +116,57 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
 
         }
 
+        //Get Likes
+        firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+
+                if(documentSnapshot.exists()){
+
+                    holder.eventRegisterBtn.setImageDrawable(context.getDrawable(R.mipmap.registered));
+
+
+                } else {
+
+                    holder.eventRegisterBtn.setImageDrawable(context.getDrawable(R.mipmap.register_grey));
+
+                }
+
+
+
+            }
+        });
+
+        //Likes Feature
+        holder.eventRegisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        if(!task.getResult().exists()){
+
+                            Map<String, Object> likesMap = new HashMap<>();
+                            likesMap.put("timestamp", FieldValue.serverTimestamp());
+
+                            firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).set(likesMap);
+                            Toast.makeText(v.getContext(), "Successfully registered", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).delete();
+                            Toast.makeText(v.getContext(), "Successfully unregistered", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+            }
+        });
+
 
 
 
@@ -160,6 +203,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
 
 
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -175,7 +219,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
 
         public void setNameText(String nameText){
 
-            nameView = mView.findViewById(R.id.event_name);
+            nameView = mView.findViewById(R.id.name);
             nameView.setText(nameText);
 
         }
@@ -218,7 +262,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         }
 
         public void setUserData(String name){
-            eventUserName = mView.findViewById(R.id.event_host_name);
+            eventUserName = mView.findViewById(R.id.event_name);
             eventUserName.setText(name);
 
         }

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,6 +24,7 @@ public class OrganizerHome extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
 
     private Button createBtn;
+    private Button viewBtn;
 
 
     private Toolbar organizerToolbar;
@@ -56,6 +58,14 @@ public class OrganizerHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendToCreate();
+            }
+        });
+
+        viewBtn = (Button) findViewById(R.id.view_btn);
+        viewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToView();
             }
         });
 
@@ -95,6 +105,7 @@ public class OrganizerHome extends AppCompatActivity {
 
             case R.id.organizer_logout:
                 logout();
+                Toast.makeText(OrganizerHome.this, "Successfully sign out" , Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.organizer_account:
@@ -131,6 +142,13 @@ public class OrganizerHome extends AppCompatActivity {
 
         Intent createintent = new Intent(OrganizerHome.this, OrganizerCreate.class);
         startActivity(createintent);
+        finish();
+    }
+
+    private void  sendToView (){
+
+        Intent viewintent = new Intent(OrganizerHome.this, OrganizerView.class);
+        startActivity(viewintent);
         finish();
     }
 

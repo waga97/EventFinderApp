@@ -20,6 +20,7 @@ public class About extends AppCompatActivity {
         aboutToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.about_toolbar);
         setSupportActionBar(aboutToolbar);
         getSupportActionBar().setTitle("About");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

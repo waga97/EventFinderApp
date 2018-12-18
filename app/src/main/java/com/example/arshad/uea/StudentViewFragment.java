@@ -105,6 +105,8 @@ public class StudentViewFragment extends Fragment {
 
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
+                                //mark eps 19 beg
+
                                 String eventPostId = doc.getDocument().getId();
                                 EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
 

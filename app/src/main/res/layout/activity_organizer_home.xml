@@ -10,7 +10,7 @@
         android:id="@+id/organizer_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/actionbar"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,25 +20,31 @@
     <Button
         android:id="@+id/create_btn"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginBottom="496dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/roundedbutton2"
         android:text="CREATE EVENT"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/sample_btn"
+        android:id="@+id/view_btn"
         android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="368dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="SAMPLE"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/roundedbutton2"
+        android:text="VIEW EVENT"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_btn" />
+
 </android.support.constraint.ConstraintLayout>

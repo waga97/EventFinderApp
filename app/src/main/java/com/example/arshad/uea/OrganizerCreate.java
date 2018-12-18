@@ -31,8 +31,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,7 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import id.zelory.compressor.Compressor;
+
 
 public class OrganizerCreate extends AppCompatActivity {
 
@@ -129,8 +127,14 @@ public class OrganizerCreate extends AppCompatActivity {
 
                             String downloadUri = taskSnapshot.getDownloadUrl().toString();
 
+                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String RegisteredUserID = currentUser.getUid();
 
-                            Map<String, Object> postMap = new HashMap<>();
+
+
+
+
+                            final Map<String, Object> postMap = new HashMap<>();
                             postMap.put("image_url", downloadUri);
                             postMap.put("name", name);
                             postMap.put("date", date);
@@ -141,10 +145,19 @@ public class OrganizerCreate extends AppCompatActivity {
                             postMap.put("user_id", current_user_id);
                             postMap.put("timestamp", FieldValue.serverTimestamp());
 
+
+
+                            firebaseFirestore.collection("Users").document(RegisteredUserID).collection("Events").add(postMap);
+
+
+
                             firebaseFirestore.collection("Events").add(postMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
+
                                     if(task.isSuccessful()){
+
+
 
                                         Toast.makeText(OrganizerCreate.this, "Successfully created", Toast.LENGTH_LONG).show();
                                         Intent mainIntent = new Intent(OrganizerCreate.this, OrganizerHome.class);

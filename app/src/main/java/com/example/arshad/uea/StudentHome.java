@@ -116,6 +116,7 @@ public class StudentHome extends AppCompatActivity {
 
             case R.id.student_logout:
                 logout();
+                Toast.makeText(StudentHome.this, "Successfully sign out" , Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.student_scorun:
@@ -131,13 +132,14 @@ public class StudentHome extends AppCompatActivity {
 
     private void logout(){
 
+
         firebaseAuth.signOut();
         sendToMain();
     }
 
     private void  sendToMain (){
 
-        Intent logoutintent = new Intent(StudentHome.this, SplashScreen.class);
+        Intent logoutintent = new Intent(StudentHome.this, MainActivity.class);
         startActivity(logoutintent);
         finish();
     }

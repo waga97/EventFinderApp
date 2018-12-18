@@ -2,13 +2,10 @@ package com.example.arshad.uea;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mainToolbar;
 
     private Button loginBtn;
+    private Button signupBtn;
 
     private ProgressBar loginProg;
 
@@ -63,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         emailEt = (EditText) findViewById(R.id.email_et);
-        passwordEt = (EditText) findViewById(R.id.password_et);
+        passwordEt = (EditText) findViewById(R.id.sg_password_et);
         loginBtn = (Button) findViewById(R.id.login_btn);
+        signupBtn = (Button) findViewById(R.id.signup_btn);
         loginProg = (ProgressBar) findViewById(R.id.login_prog);
 
 
@@ -81,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendToSignup();
+
+            }
+        });
     }
 
 
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if(task.isSuccessful()){
 
+
                             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                             String RegisteredUserID = currentUser.getUid();
 
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     String userType = task.getResult().getString("type");
 
-                                    if(userType.equals("1")){
+                                    if(userType.equals("Student")){
                                         sendToStudent();
                                     }else{
                                         sendToOrganizer();
@@ -129,6 +134,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    protected void onStart() {
+       super.onStart();
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+
+            validate();
+
+       }
+
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,6 +192,33 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void validate(){
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String RegisteredUserID = currentUser.getUid();
+
+        firebaseFirestore.collection("Users").document(RegisteredUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                String userType = task.getResult().getString("type");
+
+                if(userType.equals("Student")){
+                    sendToStudent();
+                }else{
+                    sendToOrganizer();
+                }
+
+            }
+        });
+
+    }
+
+    private void sendToSignup(){
+        Intent intentsignup = new Intent(MainActivity.this, SignupActivity.class);
+        startActivity(intentsignup);
+        finish();
+    }
 
 
 

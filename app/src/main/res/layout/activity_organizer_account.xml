@@ -10,7 +10,7 @@
         android:id="@+id/organizeraccount_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/actionbar"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,17 +20,20 @@
     <EditText
         android:id="@+id/account_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginBottom="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/roundedtext"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
         android:textAlignment="center"
+        android:textColor="#FF2C328E"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/save_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -38,21 +41,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="288dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/holo_red_dark"
+        android:layout_marginEnd="16dp"
+
+        android:layout_marginStart="16dp"
+        android:background="@drawable/roundedbutton"
         android:text="SAVE"
         android:textColor="@android:color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/account_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:src="@drawable/empty_logo"

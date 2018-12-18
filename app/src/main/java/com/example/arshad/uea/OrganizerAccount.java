@@ -28,7 +28,7 @@ public class OrganizerAccount extends AppCompatActivity {
 
     private Toolbar organizerAccountToolbar;
 
-    private ImageView accountLogo;
+    private CircleImageView accountLogo;
 
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
