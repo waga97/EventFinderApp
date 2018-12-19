@@ -27,28 +27,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StudentHome"
+            android:name=".Student.StudentHome"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrganizerHome"
+            android:name=".Organizer.OrganizerHome"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrganizerCreate"
+            android:name=".Organizer.OrganizerCreate"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrganizerAccount"
+            android:name=".Organizer.OrganizerAccount"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StudentScorun"
+            android:name=".Student.StudentScorun"
             android:screenOrientation="portrait" />
         <activity
             android:name=".About"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrganizerView"
+            android:name=".Organizer.OrganizerViewEvent"
             android:screenOrientation="portrait" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".OrganizerEventParticipant"></activity>
+        <activity android:name=".Organizer.OrganizerViewParticipant"></activity>
     </application>
 
 </manifest>
