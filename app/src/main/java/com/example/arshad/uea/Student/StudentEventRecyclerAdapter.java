@@ -1,4 +1,4 @@
-package com.example.arshad.uea;
+package com.example.arshad.uea.Student;
 
 import android.content.Context;
 import android.os.Build;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.arshad.uea.EventPost;
+import com.example.arshad.uea.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.ViewHolder> {
+public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEventRecyclerAdapter.ViewHolder> {
 
     public List<EventPost> event_list;
     public Context context;
@@ -37,7 +39,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
-    public EventRecyclerAdapter(List<EventPost> event_list){
+    public StudentEventRecyclerAdapter(List<EventPost> event_list){
 
         this.event_list = event_list;
 
@@ -150,6 +152,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                         if(!task.getResult().exists()){
 
                             Map<String, Object> likesMap = new HashMap<>();
+                            likesMap.put("user_id", currentUserId);
                             likesMap.put("timestamp", FieldValue.serverTimestamp());
 
                             firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).set(likesMap);

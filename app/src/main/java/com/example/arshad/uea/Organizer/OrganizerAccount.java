@@ -1,4 +1,4 @@
-package com.example.arshad.uea;
+package com.example.arshad.uea.Organizer;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,9 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
+import com.example.arshad.uea.MainActivity;
+import com.example.arshad.uea.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;

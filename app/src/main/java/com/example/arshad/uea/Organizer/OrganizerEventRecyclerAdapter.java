@@ -1,8 +1,7 @@
-package com.example.arshad.uea;
+package com.example.arshad.uea.Organizer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -12,23 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.arshad.uea.EventPost;
+import com.example.arshad.uea.R;
+import com.example.arshad.uea.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<OrganizerEventRecyclerAdapter.ViewHolder> {
 
@@ -124,7 +115,11 @@ public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<Organize
             @Override
             public void onClick(View v) {
 
-                context.startActivity(new Intent (context,OrganizerEventParticipant.class));
+
+                Intent viewinetnt = new Intent(context, OrganizerViewParticipant.class);
+                viewinetnt.putExtra("event_id", eventPostId);
+                context.startActivity(viewinetnt);
+
 
             }
         });

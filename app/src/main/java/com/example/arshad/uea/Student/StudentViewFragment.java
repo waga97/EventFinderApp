@@ -1,24 +1,15 @@
-package com.example.arshad.uea;
+package com.example.arshad.uea.Student;
 
-import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.arshad.uea.EventPost;
+import com.example.arshad.uea.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,20 +26,19 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrganizerViewFragment extends Fragment {
+public class StudentViewFragment extends Fragment {
 
     private RecyclerView event_list_view;
     private List<EventPost> event_list;
-    private List<User> user_list;
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-    private OrganizerEventRecyclerAdapter eventRecyclerAdapter;
+    private StudentEventRecyclerAdapter studentEventRecyclerAdapter;
 
     private DocumentSnapshot lastVisible;
     private Boolean isFirstPageFirstLoad = true;
 
-    public OrganizerViewFragment() {
+    public StudentViewFragment() {
         // Required empty public constructor
     }
 
@@ -57,17 +47,16 @@ public class OrganizerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_organizer_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_view, container, false);
 
         event_list = new ArrayList<>();
-        user_list = new ArrayList<>();
-        event_list_view = view.findViewById(R.id.organizer_event_list_view);
+        event_list_view = view.findViewById(R.id.event_list_view);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        eventRecyclerAdapter = new OrganizerEventRecyclerAdapter(event_list, user_list);
+        studentEventRecyclerAdapter = new StudentEventRecyclerAdapter(event_list);
         event_list_view.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        event_list_view.setAdapter(eventRecyclerAdapter);
+        event_list_view.setAdapter(studentEventRecyclerAdapter);
         event_list_view.setHasFixedSize(true);
 
         if(firebaseAuth.getCurrentUser() != null) {
@@ -101,7 +90,6 @@ public class OrganizerViewFragment extends Fragment {
 
                             lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
                             event_list.clear();
-                            user_list.clear();
 
                         }
 
@@ -109,37 +97,23 @@ public class OrganizerViewFragment extends Fragment {
 
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
+                                //mark eps 19 beg
+
                                 String eventPostId = doc.getDocument().getId();
-                                final EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
+                                EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
 
-                                String eventUserId = doc.getDocument().getString("user_id");
-                                firebaseFirestore.collection("Users").document(eventUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (isFirstPageFirstLoad) {
 
-                                        if(task.isSuccessful()){
+                                    event_list.add(eventPost);
 
-                                            User user = task.getResult().toObject(User.class);
+                                } else {
 
+                                    event_list.add(0, eventPost);
 
-                                            if (isFirstPageFirstLoad) {
-                                                user_list.add(user);
-                                                event_list.add(eventPost);
-
-                                            } else {
-                                                user_list.add(0,user);
-                                                event_list.add(0, eventPost);
-
-                                            }
-                                            eventRecyclerAdapter.notifyDataSetChanged();
+                                }
 
 
-                                        }
-
-                                    }
-                                });
-
-
+                                studentEventRecyclerAdapter.notifyDataSetChanged();
 
                             }
                         }
@@ -179,28 +153,10 @@ public class OrganizerViewFragment extends Fragment {
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                 String eventPostId = doc.getDocument().getId();
-                                final EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
-                                String eventUserId = doc.getDocument().getString("user_id");
-                                firebaseFirestore.collection("Users").document(eventUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
+                                event_list.add(eventPost);
 
-                                        if(task.isSuccessful()){
-
-                                            User user = task.getResult().toObject(User.class);
-
-                                            user_list.add(user);
-                                            event_list.add(eventPost);
-
-
-                                            eventRecyclerAdapter.notifyDataSetChanged();
-
-
-                                        }
-
-                                    }
-                                });
-
+                                studentEventRecyclerAdapter.notifyDataSetChanged();
                             }
 
                         }
@@ -214,4 +170,3 @@ public class OrganizerViewFragment extends Fragment {
     }
 
 }
-

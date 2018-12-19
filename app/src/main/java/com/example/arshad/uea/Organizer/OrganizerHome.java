@@ -1,4 +1,4 @@
-package com.example.arshad.uea;
+package com.example.arshad.uea.Organizer;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.arshad.uea.MainActivity;
+import com.example.arshad.uea.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -147,7 +149,7 @@ public class OrganizerHome extends AppCompatActivity {
 
     private void  sendToView (){
 
-        Intent viewintent = new Intent(OrganizerHome.this, OrganizerView.class);
+        Intent viewintent = new Intent(OrganizerHome.this, OrganizerViewEvent.class);
         startActivity(viewintent);
         finish();
     }
