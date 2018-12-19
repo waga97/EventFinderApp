@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.arshad.uea.Organizer.Participants;
 import com.example.arshad.uea.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,37 +17,36 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<OrganizerParticipantRecyclerAdapter.ViewHolder> {
+public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<com.example.arshad.uea.Organizer.OrganizerParticipantRecyclerAdapter.ViewHolder> {
 
-    public List<Participant> participantList;
+    public List<Participants> participantsList;
     public Context context;
 
     private FirebaseFirestore firebaseFirestore;
 
-    public OrganizerParticipantRecyclerAdapter(List<Participant> participantList){
+    public OrganizerParticipantRecyclerAdapter(List<Participants> participantsList){
 
-        this.participantList = participantList;
+        this.participantsList = participantsList;
 
     }
 
     @Override
-    public OrganizerParticipantRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public com.example.arshad.uea.Organizer.OrganizerParticipantRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.participant_list_item, parent, false);
         context = parent.getContext();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        return new ViewHolder(view);
+        return new com.example.arshad.uea.Organizer.OrganizerParticipantRecyclerAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final OrganizerParticipantRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final com.example.arshad.uea.Organizer.OrganizerParticipantRecyclerAdapter.ViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
 
 
-        //User Data will be retrieved here...
 
-        String user_id = participantList.get(position).getUserId();
+        String user_id = participantsList.get(position).getUser_id();
         firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -56,7 +56,7 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<Or
                     String userName = task.getResult().getString("name");
 
 
-                    holder.setparticipantName(userName);
+                    holder.setUserData(userName);
 
 
                 } else {
@@ -70,12 +70,13 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<Or
 
     }
 
+
     @Override
     public int getItemCount() {
 
-        if(participantList != null) {
+        if(participantsList != null) {
 
-            return participantList.size();
+            return participantsList.size();
 
         } else {
 
@@ -85,23 +86,23 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<Or
 
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private View mView;
 
-        private TextView participantName;
+
+        private TextView participant_name;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public void setparticipantName(String name){
 
-            participantName = mView.findViewById(R.id.reg_student_name);
-            participantName.setText(name);
+
+        public void setUserData(String name){
+            participant_name = mView.findViewById(R.id.reg_student_name);
+            participant_name.setText(name);
 
         }
 

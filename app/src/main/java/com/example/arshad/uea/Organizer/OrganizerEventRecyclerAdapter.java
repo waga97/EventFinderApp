@@ -128,6 +128,11 @@ public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<Organize
             @Override
             public void onClick(View v) {
 
+                Intent viewinetnt = new Intent(context, OrganizerEventUpdate.class);
+                viewinetnt.putExtra("event_id", eventPostId);
+                context.startActivity(viewinetnt);
+
+
             }
         });
 

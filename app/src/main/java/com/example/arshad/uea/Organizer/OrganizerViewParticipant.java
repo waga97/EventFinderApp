@@ -9,13 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 
 import com.example.arshad.uea.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,15 +27,14 @@ public class OrganizerViewParticipant extends AppCompatActivity {
 
     private Toolbar orgeventpartToolbar;
 
-    private RecyclerView participant_listview;
+    private RecyclerView participant_list;
     private OrganizerParticipantRecyclerAdapter organizerParticipantRecyclerAdapter;
-    private List<Participant> participantList;
+    private List<Participants> participantsList;
 
     private FirebaseFirestore firebaseFirestore;
 
     private String event_id;
 
-    Participant retrieve;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,24 +59,40 @@ public class OrganizerViewParticipant extends AppCompatActivity {
         });
 
 
-        participant_listview = findViewById(R.id.participant_list);
+        participant_list = findViewById(R.id.participant_list);
 
         //RecyclerView Firebase List
-        participantList = new ArrayList<>();
-        organizerParticipantRecyclerAdapter = new OrganizerParticipantRecyclerAdapter(participantList);
-        participant_listview.setHasFixedSize(true);
-        participant_listview.setLayoutManager(new LinearLayoutManager(this));
-        participant_listview.setAdapter(organizerParticipantRecyclerAdapter);
+        participantsList = new ArrayList<>();
+        organizerParticipantRecyclerAdapter = new OrganizerParticipantRecyclerAdapter(participantsList);
+        participant_list.setHasFixedSize(true);
+        participant_list.setLayoutManager(new LinearLayoutManager(this));
+        participant_list.setAdapter(organizerParticipantRecyclerAdapter);
 
 
+        firebaseFirestore.collection("Events/" + event_id + "/Register")
+                .addSnapshotListener(OrganizerViewParticipant.this, new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+
+                        if (!documentSnapshots.isEmpty()) {
+
+                            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                    String commentId = doc.getDocument().getId();
+                                    Participants participants = doc.getDocument().toObject(Participants.class);
+                                    participantsList.add(participants);
+                                    organizerParticipantRecyclerAdapter.notifyDataSetChanged();
 
 
+                                }
+                            }
 
+                        }
 
-
-
-
-
+                    }
+                });
 
 
 
