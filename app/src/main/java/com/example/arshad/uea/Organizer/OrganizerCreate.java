@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.arshad.uea.EventPost;
 import com.example.arshad.uea.MainActivity;
 import com.example.arshad.uea.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,6 +45,8 @@ import java.util.UUID;
 public class OrganizerCreate extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
+
+    public List<EventPost> event_list;
 
 
 
@@ -53,7 +57,6 @@ public class OrganizerCreate extends AppCompatActivity {
     private EditText eventDate;
     private EditText eventTime;
     private EditText eventVenue;
-    private EditText eventScorun;
     private EditText eventDesc;
     private Button createBtn;
 
@@ -67,7 +70,7 @@ public class OrganizerCreate extends AppCompatActivity {
 
     private String current_user_id;
 
-    private Bitmap compressedImageFile;
+
 
 
     @Override
@@ -90,7 +93,6 @@ public class OrganizerCreate extends AppCompatActivity {
         eventDate = findViewById(R.id.event_date_et);
         eventTime = findViewById(R.id.event_time_et);
         eventVenue = findViewById(R.id.event_venue_et);
-        eventScorun = findViewById(R.id.event_scorun_et);
         eventDesc = findViewById(R.id.event_desc_et);
         eventImage = findViewById(R.id.event_image);
         createBtn = findViewById(R.id.create_btn);
@@ -113,10 +115,9 @@ public class OrganizerCreate extends AppCompatActivity {
                 final String date = eventDate.getText().toString();
                 final String time = eventTime.getText().toString();
                 final String venue = eventVenue.getText().toString();
-                final String scorun = eventScorun.getText().toString();
                 final String desc = eventDesc.getText().toString();
 
-                if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) &&!TextUtils.isEmpty(venue) &&!TextUtils.isEmpty(scorun) &&!TextUtils.isEmpty(desc) && postImageUri != null){
+                if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) &&!TextUtils.isEmpty(venue) &&!TextUtils.isEmpty(desc) && postImageUri != null){
                     createProg.setVisibility(View.VISIBLE);
 
                     StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
@@ -139,24 +140,21 @@ public class OrganizerCreate extends AppCompatActivity {
                             postMap.put("date", date);
                             postMap.put("time", time);
                             postMap.put("venue", venue);
-                            postMap.put("scorun", scorun);
                             postMap.put("desc", desc);
                             postMap.put("user_id", current_user_id);
                             postMap.put("timestamp", FieldValue.serverTimestamp());
 
 
 
-                            firebaseFirestore.collection("Users").document(RegisteredUserID).collection("Events").add(postMap);
 
 
 
-                            firebaseFirestore.collection("Events").add(postMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+                            firebaseFirestore.collection("Pending_Events").add(postMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
 
                                     if(task.isSuccessful()){
-
-
 
                                         Toast.makeText(OrganizerCreate.this, "Successfully created", Toast.LENGTH_LONG).show();
                                         Intent mainIntent = new Intent(OrganizerCreate.this, OrganizerHome.class);

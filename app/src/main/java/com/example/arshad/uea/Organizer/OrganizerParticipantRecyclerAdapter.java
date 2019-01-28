@@ -54,9 +54,13 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<co
                 if(task.isSuccessful()){
 
                     String userName = task.getResult().getString("name");
+                    String userid = task.getResult().getString("id");
+                    String useremail = task.getResult().getString("email");
 
 
                     holder.setUserData(userName);
+                    holder.setUserId(userid);
+                    holder.setUserEmail(useremail);
 
 
                 } else {
@@ -92,6 +96,8 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<co
 
 
         private TextView participant_name;
+        private TextView participant_id;
+        private TextView participant_email;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -103,6 +109,18 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<co
         public void setUserData(String name){
             participant_name = mView.findViewById(R.id.reg_student_name);
             participant_name.setText(name);
+
+        }
+
+        public void setUserId(String userid){
+            participant_id = mView.findViewById(R.id.reg_student_id);
+            participant_id.setText(userid);
+
+        }
+
+        public void setUserEmail(String email){
+            participant_email = mView.findViewById(R.id.reg_student_email);
+            participant_email.setText(email);
 
         }
 

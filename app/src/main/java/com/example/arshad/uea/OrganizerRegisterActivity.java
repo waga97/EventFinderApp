@@ -11,12 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.arshad.uea.Organizer.OrganizerCreate;
+import com.example.arshad.uea.Organizer.OrganizerHome;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,29 +32,20 @@ import java.util.Map;
 
 
 
-public class SignupActivity extends AppCompatActivity {
+public class OrganizerRegisterActivity extends AppCompatActivity {
 
-    private Toolbar signupToolbar;
+
 
     private Button signupBtn;
 
-    private String type;
+    private Toolbar organizercreateToolbar;
 
     private EditText emailEt;
     private EditText passEt;
     private EditText confirmpassEt;
     private EditText nameEt;
 
-
-    private RadioGroup typeRadio;
-    private RadioButton typeRadioOption;
-
-
-    private String user_id;
-
-
-
-
+    private ProgressBar organizerregPb;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -61,42 +54,24 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_organizer_register);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        signupToolbar= (Toolbar) findViewById(R.id.signup_toolbar);
-        setSupportActionBar(signupToolbar);
-        getSupportActionBar().setTitle("Sign Up");
+        organizercreateToolbar = (Toolbar) findViewById(R.id.organizercreate_toolbar);
+        setSupportActionBar(organizercreateToolbar);
+        getSupportActionBar().setTitle("Organizer Register");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         emailEt = (EditText) findViewById(R.id.sg_email_et);
         passEt = (EditText) findViewById(R.id.sg_password_et);
         confirmpassEt = (EditText) findViewById(R.id.sg_confirm_password_et);
         nameEt = (EditText) findViewById(R.id.sg_name_et);
-        typeRadio = findViewById(R.id.type_radio);
+        organizerregPb = findViewById(R.id.organizerreg_pb);
 
-        typeRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int i) {
 
-                typeRadioOption = typeRadio.findViewById(i);
-
-               switch (i){
-
-                    case R.id.radio_student:
-                        type = typeRadioOption.getText().toString();
-                        break;
-                    case R.id.radio_organizer:
-                        type = typeRadioOption.getText().toString();
-                        break;
-                    default:
-                        break;
-
-                }
-            }
-        });
 
 
 
@@ -106,16 +81,19 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = emailEt.getText().toString();
+                final String email = emailEt.getText().toString();
                 String pass = passEt.getText().toString();
                 String confirm_pass = confirmpassEt.getText().toString();
                 final String name = nameEt.getText().toString();
+                final String type = "Organizer";
 
 
 
-                if(!TextUtils.isEmpty( type) &&!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) & !TextUtils.isEmpty(confirm_pass)){
+                if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) & !TextUtils.isEmpty(confirm_pass)){
 
                     if(pass.equals(confirm_pass)){
+
+                        organizerregPb.setVisibility(View.VISIBLE);
 
                         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -128,7 +106,9 @@ public class SignupActivity extends AppCompatActivity {
 
                                     Map<String, String> userMap = new HashMap<>();
                                     userMap.put("name", name);
+                                    userMap.put("email", email);
                                     userMap.put("type", type);
+
 
 
                                     firebaseFirestore.collection("Users").document(RegisteredUserID).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -138,33 +118,28 @@ public class SignupActivity extends AppCompatActivity {
                                             if(task.isSuccessful()){
                                                 mAuth.getCurrentUser().sendEmailVerification();
                                                 mAuth.signOut();
-                                                Toast.makeText(SignupActivity.this, "Successfully created. Please check your email to verify your account", Toast.LENGTH_LONG).show();
-                                                Intent mainIntent = new Intent(SignupActivity.this, MainActivity.class);
+                                                Toast.makeText(OrganizerRegisterActivity.this, "Successfully created. Please check your email to verify your account", Toast.LENGTH_LONG).show();
+                                                Intent mainIntent = new Intent(OrganizerRegisterActivity.this, MainActivity.class);
                                                 startActivity(mainIntent);
                                                 finish();
 
                                             } else {
 
                                                 String error = task.getException().getMessage();
-                                                Toast.makeText(SignupActivity.this, "Error: " + error, Toast.LENGTH_LONG).show();
+                                                Toast.makeText(OrganizerRegisterActivity.this, "Error: " + error, Toast.LENGTH_LONG).show();
 
                                             }
 
-
+                                            organizerregPb.setVisibility(View.INVISIBLE);
 
                                         }
                                     });
 
 
-
-
-
-
-
                                 } else {
 
                                     String errorMessage = task.getException().getMessage();
-                                    Toast.makeText(SignupActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(OrganizerRegisterActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
 
                                 }
                             }
@@ -172,7 +147,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     } else {
 
-                        Toast.makeText(SignupActivity.this, "Confirm Password and Password Field doesn't match.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(OrganizerRegisterActivity.this, "Confirm Password and Password Field doesn't match.", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -197,17 +172,20 @@ public class SignupActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             default:
-                Intent backIntent = new Intent(SignupActivity.this, MainActivity.class);
+                Intent backIntent = new Intent(OrganizerRegisterActivity.this, RegisterActivity.class);
                 startActivity(backIntent);
                 return true;
         }
 
     }
 
-    private  void sendToMain(){
 
-        Intent mainIntent = new Intent(SignupActivity.this, MainActivity.class);
-        startActivity(mainIntent);
+
+
+    private  void sendToRegister(){
+
+        Intent backintent = new Intent(OrganizerRegisterActivity.this, RegisterActivity.class);
+        startActivity(backintent);
         finish();
 
     }

@@ -47,8 +47,22 @@
         <activity
             android:name=".Organizer.OrganizerViewEvent"
             android:screenOrientation="portrait" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".Organizer.OrganizerViewParticipant"></activity>
+        <activity
+            android:name=".StudentRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Organizer.OrganizerViewParticipant"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Organizer.OrganizerEventUpdate"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Student.StudentMyEvent" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".OrganizerRegisterActivity" />
+        <activity android:name=".Admin.AdminHome" />
+        <activity android:name=".Admin.FullEvent" />
+        <activity android:name=".Admin.ApprovedEvent" />
+        <activity android:name=".Admin.DeclinedEvent"></activity>
     </application>
 
 </manifest>

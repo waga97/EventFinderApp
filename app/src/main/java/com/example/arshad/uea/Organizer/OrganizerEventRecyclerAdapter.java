@@ -2,6 +2,7 @@ package com.example.arshad.uea.Organizer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -11,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.arshad.uea.EventPost;
 import com.example.arshad.uea.R;
 import com.example.arshad.uea.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -91,15 +94,20 @@ public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<Organize
 
         }
 
-        final DocumentReference ref =firebaseFirestore.collection("Events").document(eventPostId);
+        final DocumentReference ref_details =firebaseFirestore.collection("Approved_Events").document(eventPostId);
+        final DocumentReference ref_participant =firebaseFirestore.collection("Approved_Events").document(eventPostId).collection("Participant").document("Participant");
+        final DocumentReference ref_student_register= firebaseFirestore.collection("Users").document().collection("Register").document(eventPostId);
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //firebaseFirestore.collection("Events").document(eventPostId).delete();
-                ref.delete();
+                //ref_details.delete();
+                firebaseFirestore.collection("Approved_Events").document(eventPostId).delete();
+
                 event_list.remove(position);
+                user_list.remove(position);
                 notifyDataSetChanged();
 
                 context.startActivity(new Intent (context,OrganizerHome.class));
@@ -181,7 +189,7 @@ public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<Organize
 
         public void setNameText(String nameText){
 
-            nameView = mView.findViewById(R.id.event_name);
+            nameView = mView.findViewById(R.id.event_namr);
             nameView.setText(nameText);
 
         }

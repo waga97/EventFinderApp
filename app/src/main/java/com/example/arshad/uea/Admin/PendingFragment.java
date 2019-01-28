@@ -1,7 +1,6 @@
-package com.example.arshad.uea.Organizer;
+package com.example.arshad.uea.Admin;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.arshad.uea.EventPost;
 import com.example.arshad.uea.R;
-import com.example.arshad.uea.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,20 +26,19 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrganizerViewEventFragment extends Fragment {
+public class PendingFragment extends Fragment {
 
-    private RecyclerView event_list_view;
+    private RecyclerView approve_list_view;
     private List<EventPost> event_list;
-    private List<User> user_list;
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-    private OrganizerEventRecyclerAdapter eventRecyclerAdapter;
+    private PendingRecyclerAdapter pendingRecyclerAdapter;
 
     private DocumentSnapshot lastVisible;
     private Boolean isFirstPageFirstLoad = true;
 
-    public OrganizerViewEventFragment() {
+    public PendingFragment() {
         // Required empty public constructor
     }
 
@@ -52,24 +47,23 @@ public class OrganizerViewEventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_organizer_view_event, container, false);
+        View view = inflater.inflate(R.layout.fragment_pending, container, false);
 
         event_list = new ArrayList<>();
-        user_list = new ArrayList<>();
-        event_list_view = view.findViewById(R.id.organizer_event_list_view);
+        approve_list_view = view.findViewById(R.id.approve_list_view);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        eventRecyclerAdapter = new OrganizerEventRecyclerAdapter(event_list, user_list);
-        event_list_view.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        event_list_view.setAdapter(eventRecyclerAdapter);
-        event_list_view.setHasFixedSize(true);
+        pendingRecyclerAdapter = new PendingRecyclerAdapter(event_list);
+        approve_list_view.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        approve_list_view.setAdapter(pendingRecyclerAdapter);
+        approve_list_view.setHasFixedSize(true);
 
         if(firebaseAuth.getCurrentUser() != null) {
 
             firebaseFirestore = FirebaseFirestore.getInstance();
 
-            event_list_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            approve_list_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
@@ -85,7 +79,7 @@ public class OrganizerViewEventFragment extends Fragment {
                 }
             });
 
-            Query firstQuery = firebaseFirestore.collection("Approved_Events").orderBy("timestamp", Query.Direction.DESCENDING).limit(100);
+            Query firstQuery = firebaseFirestore.collection("Pending_Events").orderBy("timestamp", Query.Direction.DESCENDING).limit(100);
             firstQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -96,7 +90,6 @@ public class OrganizerViewEventFragment extends Fragment {
 
                             lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
                             event_list.clear();
-                            user_list.clear();
 
                         }
 
@@ -104,37 +97,23 @@ public class OrganizerViewEventFragment extends Fragment {
 
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
+                                //mark eps 19 beg
+
                                 String eventPostId = doc.getDocument().getId();
-                                final EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
+                                EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
 
-                                String eventUserId = doc.getDocument().getString("user_id");
-                                firebaseFirestore.collection("Users").document(eventUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (isFirstPageFirstLoad) {
 
-                                        if(task.isSuccessful()){
+                                    event_list.add(eventPost);
 
-                                            User user = task.getResult().toObject(User.class);
+                                } else {
 
+                                    event_list.add(0, eventPost);
 
-                                            if (isFirstPageFirstLoad) {
-                                                user_list.add(user);
-                                                event_list.add(eventPost);
-
-                                            } else {
-                                                user_list.add(0,user);
-                                                event_list.add(0, eventPost);
-
-                                            }
-                                            eventRecyclerAdapter.notifyDataSetChanged();
+                                }
 
 
-                                        }
-
-                                    }
-                                });
-
-
+                                pendingRecyclerAdapter.notifyDataSetChanged();
 
                             }
                         }
@@ -157,7 +136,7 @@ public class OrganizerViewEventFragment extends Fragment {
 
         if(firebaseAuth.getCurrentUser() != null) {
 
-            Query nextQuery = firebaseFirestore.collection("Approved_Events")
+            Query nextQuery = firebaseFirestore.collection("Pending_Events")
                     .orderBy("timestamp", Query.Direction.DESCENDING)
                     .startAfter(lastVisible)
                     .limit(100);
@@ -174,28 +153,10 @@ public class OrganizerViewEventFragment extends Fragment {
                             if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                 String eventPostId = doc.getDocument().getId();
-                                final EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
-                                String eventUserId = doc.getDocument().getString("user_id");
-                                firebaseFirestore.collection("Users").document(eventUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
+                                event_list.add(eventPost);
 
-                                        if(task.isSuccessful()){
-
-                                            User user = task.getResult().toObject(User.class);
-
-                                            user_list.add(user);
-                                            event_list.add(eventPost);
-
-
-                                            eventRecyclerAdapter.notifyDataSetChanged();
-
-
-                                        }
-
-                                    }
-                                });
-
+                                pendingRecyclerAdapter.notifyDataSetChanged();
                             }
 
                         }
@@ -209,4 +170,3 @@ public class OrganizerViewEventFragment extends Fragment {
     }
 
 }
-

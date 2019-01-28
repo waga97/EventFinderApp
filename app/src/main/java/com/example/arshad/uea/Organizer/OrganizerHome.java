@@ -127,8 +127,6 @@ public class OrganizerHome extends AppCompatActivity {
 
 
     private void logout(){
-
-
         firebaseAuth.signOut();
         sendToMain();
     }

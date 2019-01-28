@@ -44,7 +44,7 @@ public class OrganizerViewParticipant extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         event_id = getIntent().getStringExtra("event_id");
 
-        firebaseFirestore.collection("Events").document(event_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Approved_Events").document(event_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
@@ -59,7 +59,7 @@ public class OrganizerViewParticipant extends AppCompatActivity {
         });
 
 
-        participant_list = findViewById(R.id.participant_list);
+        participant_list = findViewById(R.id.my_event_list_view);
 
         //RecyclerView Firebase List
         participantsList = new ArrayList<>();
@@ -69,7 +69,7 @@ public class OrganizerViewParticipant extends AppCompatActivity {
         participant_list.setAdapter(organizerParticipantRecyclerAdapter);
 
 
-        firebaseFirestore.collection("Events/" + event_id + "/Register")
+        firebaseFirestore.collection("Approved_Events/" + event_id + "/Participant")
                 .addSnapshotListener(OrganizerViewParticipant.this, new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {

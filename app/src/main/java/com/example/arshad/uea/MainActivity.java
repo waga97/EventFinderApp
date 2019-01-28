@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
+import com.example.arshad.uea.Admin.AdminHome;
 import com.example.arshad.uea.Organizer.OrganizerHome;
 import com.example.arshad.uea.Student.StudentHome;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,15 +41,20 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mainToolbar);
         getSupportActionBar().setTitle("             UNITEN EVENT APPLICATION");
+
+
 
 
 
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        emailEt = (EditText) findViewById(R.id.email_et);
+        emailEt = (EditText) findViewById(R.id.sg_email_et);
         passwordEt = (EditText) findViewById(R.id.sg_password_et);
         loginBtn = (Button) findViewById(R.id.login_btn);
         signupBtn = (Button) findViewById(R.id.signup_btn);
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                sendToSignup();
+                sendToRegister();
 
             }
         });
@@ -102,23 +108,32 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
 
 
-                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            String RegisteredUserID = currentUser.getUid();
 
-                            firebaseFirestore.collection("Users").document(RegisteredUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                FirebaseUser currentUser = firebaseAuth.getInstance().getCurrentUser();
 
-                                    String userType = task.getResult().getString("type");
+                                String RegisteredUserID = currentUser.getUid();
 
-                                    if(userType.equals("Student")){
-                                        sendToStudent();
-                                    }else{
-                                        sendToOrganizer();
+                                firebaseFirestore.collection("Users").document(RegisteredUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                        String userType = task.getResult().getString("type");
+
+                                        if (userType.equals("Student")) {
+                                            sendToStudent();
+                                        }
+                                        else if (userType.equals("Admin")){
+                                            sendToAdmin();
+                                        } else  {
+                                            sendToOrganizer();
+
+                                        }
+
                                     }
+                                });
 
-                                }
-                            });
+
+
 
 
                         }else{
@@ -137,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected void onStart() {
+   /* protected void onStart() {
        super.onStart();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -147,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
        }
 
-   }
+   }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -194,7 +209,14 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void validate(){
+    private void sendToAdmin(){
+        Intent intentstudent = new Intent(MainActivity.this, AdminHome.class);
+        intentstudent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intentstudent);
+        finish();
+    }
+
+    /*private void validate(){
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String RegisteredUserID = currentUser.getUid();
@@ -214,13 +236,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
-    private void sendToSignup(){
-        Intent intentsignup = new Intent(MainActivity.this, SignupActivity.class);
-        startActivity(intentsignup);
+    private void sendToRegister(){
+        Intent intentregister = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intentregister);
         finish();
     }
+
 
 
 
