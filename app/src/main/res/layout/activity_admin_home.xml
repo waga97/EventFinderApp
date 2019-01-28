@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Student.StudentHome">
+    tools:context=".Admin.AdminHome">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/student_toolbar"
+        android:id="@+id/admin_tb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/actionbar"
@@ -17,26 +17,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/a"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Pending Event List"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/declined_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin_tb" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/declined_nav"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
         android:background="#ffffff"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/student_bottom_menu" />
 
     <FrameLayout
-        android:id="@+id/main_container"
+        android:id="@+id/declined_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintBottom_toTopOf="@+id/declined_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/student_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/a">
 
     </FrameLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>

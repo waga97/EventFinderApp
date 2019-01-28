@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_view"
         android:icon="@drawable/nav_view"
-        android:title="View Event" />
+        android:title="All Event" />
     <item
         android:id="@+id/action_my"
         android:icon="@drawable/nav_my"

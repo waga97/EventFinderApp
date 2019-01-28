@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/login_btn"
         android:layout_width="0dp"
@@ -36,23 +37,23 @@
         app:layout_constraintTop_toBottomOf="@+id/sg_password_et" />
 
     <EditText
-        android:id="@+id/email_et"
+        android:id="@+id/sg_email_et"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="396dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/roundedtext"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textColor="#FF2C328E"
+        android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/sg_password_et"
@@ -66,12 +67,12 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textAlignment="center"
-        android:textColor="#FF2C328E"
+        android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_et" />
+        app:layout_constraintTop_toBottomOf="@+id/sg_email_et" />
 
     <ProgressBar
         android:id="@+id/login_prog"
@@ -98,7 +99,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user" />
+        app:srcCompat="@drawable/user"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/imageView2"

@@ -6,6 +6,14 @@
         android:id="@+id/student_scorun"
         android:title="Scorun" />
     <item
-        android:id="@+id/student_logout"
+        android:id="@+id/student_event"
+        android:title="My Event" />
+    <item
+        android:id="@+id/student_search"
+        android:icon="@mipmap/action_search"
+        android:title="Search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/signout_action"
         android:title="Logout" />
 </menu>

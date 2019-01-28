@@ -34,7 +34,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/roundedbutton"
-            android:text="CREATE"
+            android:text="UPDATE"
             android:textColor="#ffffff"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -59,21 +59,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
         <TextView
-            android:id="@+id/tv_scorun"
-            android:layout_width="65dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:text="Scorun:"
-            android:textColor="#FF2C328E"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.025"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_venue" />
-
-        <TextView
             android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.026"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_scorun" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_venue" />
 
         <TextView
             android:id="@+id/tv_venue"
@@ -153,7 +138,7 @@
             android:layout_width="270dp"
             android:layout_height="35dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
 
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -215,28 +200,8 @@
             android:layout_width="270dp"
             android:layout_height="35dp"
             android:layout_marginBottom="8dp"
+
             android:layout_marginEnd="8dp"
-
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/createtext"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
-            android:textColor="#FF2C328E"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_scorun"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_venue"
-            app:layout_constraintTop_toBottomOf="@+id/tv_time" />
-
-        <EditText
-            android:id="@+id/event_scorun_et"
-            android:layout_width="270dp"
-            android:layout_height="35dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/createtext"
@@ -247,8 +212,8 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_desc"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_scorun"
-            app:layout_constraintTop_toBottomOf="@+id/tv_venue" />
+            app:layout_constraintStart_toEndOf="@+id/tv_venue"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time" />
 
         <EditText
             android:id="@+id/event_desc_et"

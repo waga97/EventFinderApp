@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/logout_action"
+        android:title="Logout" />
+    <item
+        android:id="@+id/approved_action"
+        android:title="Approved Event" />
+    <item
+        android:id="@+id/declined_action"
+        android:title="Declined Event" />
+</menu>

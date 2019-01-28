@@ -14,43 +14,28 @@
         android:background="@drawable/createtext"
         android:padding="20dp"
         app:cardBackgroundColor="#c9d7ed"
-        app:cardElevation="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/mid_boarder"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@color/colorAccent" />
-
             <TextView
                 android:id="@+id/reg_student_name"
-                android:layout_width="0dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="16dp"
-                android:text="Student Name"
-                android:textAlignment="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:textColor="#FF2C328E"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/mid_boarder"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/bot_boarder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +55,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@color/colorAccent" />
+                app:srcCompat="@color/redone" />
 
             <ImageView
                 android:id="@+id/left_boarder"
@@ -91,19 +76,52 @@
                 app:srcCompat="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/reg_student_id"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="4dp"
+                android:textColor="#FF2C328E"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/bot_boarder"
+                app:layout_constraintStart_toEndOf="@+id/reg_student_name"
+                app:layout_constraintTop_toBottomOf="@+id/top_boarder" />
+
+            <TextView
+                android:id="@+id/reg_student_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="16dp"
-                android:text="Student Id"
-                android:textAlignment="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="4dp"
                 android:textColor="#FF2C328E"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/bot_boarder"
                 app:layout_constraintEnd_toStartOf="@+id/right_boarder"
-                app:layout_constraintStart_toEndOf="@+id/mid_boarder"
+                app:layout_constraintStart_toEndOf="@+id/reg_student_id"
                 app:layout_constraintTop_toBottomOf="@+id/top_boarder" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/reg_student_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorAccent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/reg_student_id"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorAccent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
