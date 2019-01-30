@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<com.example.arshad.uea.Organizer.OrganizerParticipantRecyclerAdapter.ViewHolder> {
@@ -29,6 +30,8 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<co
         this.participantsList = participantsList;
 
     }
+
+
 
     @Override
     public com.example.arshad.uea.Organizer.OrganizerParticipantRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -71,6 +74,8 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<co
 
             }
         });
+
+
 
     }
 
@@ -125,5 +130,6 @@ public class OrganizerParticipantRecyclerAdapter extends RecyclerView.Adapter<co
         }
 
     }
+
 
 }

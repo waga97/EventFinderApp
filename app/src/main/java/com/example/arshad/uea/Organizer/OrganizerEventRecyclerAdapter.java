@@ -1,10 +1,12 @@
 package com.example.arshad.uea.Organizer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.arshad.uea.Admin.AdminHome;
 import com.example.arshad.uea.EventPost;
 import com.example.arshad.uea.R;
 import com.example.arshad.uea.User;
@@ -22,7 +25,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<OrganizerEventRecyclerAdapter.ViewHolder> {
 
@@ -100,18 +105,36 @@ public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<Organize
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
 
-                //firebaseFirestore.collection("Events").document(eventPostId).delete();
-                //ref_details.delete();
-                firebaseFirestore.collection("Approved_Events").document(eventPostId).delete();
+                new android.app.AlertDialog.Builder(v.getContext())
+                        .setMessage("Confirm delete?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                event_list.remove(position);
-                user_list.remove(position);
-                notifyDataSetChanged();
+                                //firebaseFirestore.collection("Events").document(eventPostId).delete();
+                                //ref_details.delete();
+                                firebaseFirestore.collection("Approved_Events").document(eventPostId).delete();
 
-                context.startActivity(new Intent (context,OrganizerHome.class));
-                Toast.makeText(v.getContext(), "Successfully deleted", Toast.LENGTH_SHORT).show();
+                                event_list.remove(position);
+                                user_list.remove(position);
+                                notifyDataSetChanged();
+
+                                context.startActivity(new Intent (context,OrganizerHome.class));
+                                Toast.makeText(v.getContext(), "Successfully deleted", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Alert Dialog","Negative");
+                            }
+                        })
+                        .show();
+
+
 
 
 
@@ -224,3 +247,4 @@ public class OrganizerEventRecyclerAdapter extends RecyclerView.Adapter<Organize
 
 
 }
+

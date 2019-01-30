@@ -1,21 +1,33 @@
 package com.example.arshad.uea.Organizer;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.nfc.Tag;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.arshad.uea.EventPost;
@@ -33,8 +45,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.itextpdf.text.pdf.PdfDocument;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +86,10 @@ public class OrganizerCreate extends AppCompatActivity {
 
     private String current_user_id;
 
+    private DatePickerDialog.OnDateSetListener mDateSetListner;
+
+    private TimePickerDialog.OnTimeSetListener mTimeSetListner;
+
 
 
 
@@ -97,6 +117,58 @@ public class OrganizerCreate extends AppCompatActivity {
         eventImage = findViewById(R.id.event_image);
         createBtn = findViewById(R.id.create_btn);
         createProg = findViewById(R.id.create_prog);
+
+        eventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(OrganizerCreate.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListner,year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListner = new DatePickerDialog.OnDateSetListener() {
+            public String TAG;
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+
+                month = month + 1;
+                Log.d(TAG, "onDateSet: dd/mm/yyy" + day + "/" + month + "/" + year);
+
+                String date = day + "/" + month + "/"  + year;
+                eventDate.setText(date);
+
+            }
+        };
+
+        eventTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(OrganizerCreate.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        eventTime.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
 
         eventImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,7 +320,6 @@ public class OrganizerCreate extends AppCompatActivity {
         }
 
     }
-
 
 
 

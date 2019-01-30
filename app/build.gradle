@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:exifinterface:28.0.0'
     implementation 'com.android.support:support-media-compat:28.0.0'
@@ -31,16 +31,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-
-
-
     implementation 'com.android.support:design:28.0.0'
+    //implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.github.nisrulz:screenshott:2.0.0'
+    implementation files('libs/itextpdf-5.3.2.jar')
+
 }
 
 apply plugin: 'com.google.gms.google-services'

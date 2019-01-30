@@ -1,9 +1,12 @@
 package com.example.arshad.uea.Admin;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,62 +99,98 @@ public class PendingRecyclerAdapter extends RecyclerView.Adapter<PendingRecycler
             }
         });
 
-
-
         holder.approveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                Map<String, Object> approveMap = new HashMap<>();
-                approveMap.put("event_id", eventPostId);
-                approveMap.put("name", eventName);
-                approveMap.put("date", eventDate);
-                approveMap.put("time", eventTime);
-                approveMap.put("venue", eventVenue);
-                approveMap.put("desc", eventDesc);
-                approveMap.put("image_url", eventImage);
-                approveMap.put("timestamp", eventTimestamp);
-                approveMap.put("user_id", eventHost);
+                new AlertDialog.Builder(v.getContext())
+                        .setMessage("Confirm approve?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Alert Dialog", "Positive");
+                                Map<String, Object> approveMap = new HashMap<>();
+                                approveMap.put("event_id", eventPostId);
+                                approveMap.put("name", eventName);
+                                approveMap.put("date", eventDate);
+                                approveMap.put("time", eventTime);
+                                approveMap.put("venue", eventVenue);
+                                approveMap.put("desc", eventDesc);
+                                approveMap.put("image_url", eventImage);
+                                approveMap.put("timestamp", eventTimestamp);
+                                approveMap.put("user_id", eventHost);
 
-                firebaseFirestore.collection("Approved_Events").document(eventPostId).set(approveMap);
+                                firebaseFirestore.collection("Approved_Events").document(eventPostId).set(approveMap);
 
-                firebaseFirestore.collection("Pending_Events").document(eventPostId).delete();
-                event_list.remove(position);
-                notifyDataSetChanged();
-
-                context.startActivity(new Intent (context,AdminHome.class));
-                Toast.makeText(v.getContext(), "Successfully approved", Toast.LENGTH_SHORT).show();
+                                firebaseFirestore.collection("Pending_Events").document(eventPostId).delete();
+                                event_list.remove(position);
+                                notifyDataSetChanged();
 
 
+
+                                context.startActivity(new Intent (context,AdminHome.class));
+                                Toast.makeText(v.getContext(), "Successfully approved", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Alert Dialog","Negative");
+                            }
+                        })
+                        .show();
             }
         });
+
 
         holder.declineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                Map<String, Object> declineMap = new HashMap<>();
-                declineMap.put("event_id", eventPostId);
-                declineMap.put("name", eventName);
-                declineMap.put("date", eventDate);
-                declineMap.put("time", eventTime);
-                declineMap.put("venue", eventVenue);
-                declineMap.put("desc", eventDesc);
-                declineMap.put("image_url", eventImage);
-                declineMap.put("timestamp", eventTimestamp);
-                declineMap.put("user_id", eventHost);
+                new AlertDialog.Builder(v.getContext())
+                        .setMessage("Confirm decline?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                firebaseFirestore.collection("Declined_Events").document(eventPostId).set(declineMap);
+                                Map<String, Object> declineMap = new HashMap<>();
+                                declineMap.put("event_id", eventPostId);
+                                declineMap.put("name", eventName);
+                                declineMap.put("date", eventDate);
+                                declineMap.put("time", eventTime);
+                                declineMap.put("venue", eventVenue);
+                                declineMap.put("desc", eventDesc);
+                                declineMap.put("image_url", eventImage);
+                                declineMap.put("timestamp", eventTimestamp);
+                                declineMap.put("user_id", eventHost);
 
-                firebaseFirestore.collection("Pending_Events").document(eventPostId).delete();
-                event_list.remove(position);
-                notifyDataSetChanged();
+                                firebaseFirestore.collection("Declined_Events").document(eventPostId).set(declineMap);
 
-                context.startActivity(new Intent (context,AdminHome.class));
-                Toast.makeText(v.getContext(), "Successfully declined", Toast.LENGTH_SHORT).show();
+                                firebaseFirestore.collection("Pending_Events").document(eventPostId).delete();
+                                event_list.remove(position);
+                                notifyDataSetChanged();
+
+                                context.startActivity(new Intent (context,AdminHome.class));
+                                Toast.makeText(v.getContext(), "Successfully declined", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d("Alert Dialog","Negative");
+                            }
+                        })
+                        .show();
 
             }
         });
+
+
+
+
+
+
 
         holder.nameView.setOnClickListener(new View.OnClickListener() {
             @Override
