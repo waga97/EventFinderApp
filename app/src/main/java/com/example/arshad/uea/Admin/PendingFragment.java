@@ -87,45 +87,29 @@ public class PendingFragment extends Fragment {
                     if (!documentSnapshots.isEmpty()) {
 
                         if (isFirstPageFirstLoad) {
-
                             lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
                             event_list.clear();
-
                         }
-
                         for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
 
                             if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                                //mark eps 19 beg
 
                                 String eventPostId = doc.getDocument().getId();
                                 EventPost eventPost = doc.getDocument().toObject(EventPost.class).withId(eventPostId);
 
                                 if (isFirstPageFirstLoad) {
-
                                     event_list.add(eventPost);
-
                                 } else {
-
                                     event_list.add(0, eventPost);
-
                                 }
-
-
                                 pendingRecyclerAdapter.notifyDataSetChanged();
-
                             }
                         }
-
                         isFirstPageFirstLoad = true;
-
                     }
-
                 }
 
             });
-
         }
 
         // Inflate the layout for this fragment

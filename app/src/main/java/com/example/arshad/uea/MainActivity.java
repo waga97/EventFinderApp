@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button loginBtn;
     private Button signupBtn;
+    private Button forgotpassBtn;
 
     private ProgressBar loginProg;
 
@@ -69,19 +70,14 @@ public class MainActivity extends AppCompatActivity {
         loginBtn = (Button) findViewById(R.id.login_btn);
         signupBtn = (Button) findViewById(R.id.signup_btn);
         loginProg = (ProgressBar) findViewById(R.id.login_prog);
+        forgotpassBtn = findViewById(R.id.forgotpass_btn);
 
-
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        forgotpassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String email = emailEt.getText().toString();
-                String password = passwordEt.getText().toString();
-                if(!TextUtils.isEmpty(email)&& !TextUtils.isEmpty(password)) {
-                    loginUser(email, password);
-                }else{
-                    Toast.makeText(MainActivity.this, "Error : Empty inputs are not allowed", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+
+                sendToForgotPass();
+
             }
         });
 
@@ -93,9 +89,34 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = emailEt.getText().toString();
+                String password = passwordEt.getText().toString();
+
+                if(!TextUtils.isEmpty(email)&& !TextUtils.isEmpty(password)) {
+                    loginUser(email, password);
+                }else{
+
+                    if(email.isEmpty ()){
+                        emailEt.setError ("Email Required");
+                        emailEt.requestFocus ();
+                        return;
+
+
+                    }else{
+                        passwordEt.setError ("Password Required");
+                        passwordEt.requestFocus ();
+                        return;
+
+
+                    }
+                }
+            }
+        });
     }
-
-
 
     private void loginUser(final String email, final String password) {
 
@@ -107,9 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if(task.isSuccessful()){
 
-
-
-                                FirebaseUser currentUser = firebaseAuth.getInstance().getCurrentUser();
+                                final FirebaseUser currentUser = firebaseAuth.getInstance().getCurrentUser();
 
                                 String RegisteredUserID = currentUser.getUid();
 
@@ -121,35 +140,38 @@ public class MainActivity extends AppCompatActivity {
 
                                         if (userType.equals("Student")) {
                                             sendToStudent();
-                                        }
-                                        else if (userType.equals("Admin")){
-                                            sendToAdmin();
-                                        } else  {
+                                            /*Boolean emailflag = currentUser.isEmailVerified();
+                                            if(emailflag == true){
+                                                sendToStudent();
+                                                finish();
+
+                                            }else{
+                                                Toast.makeText(MainActivity.this, "Please verify your account", Toast.LENGTH_SHORT).show();
+                                                firebaseAuth.signOut();
+                                            }*/
+                                        } else if (userType.equals("Organizer")){
                                             sendToOrganizer();
+                                            /*Boolean emailflag = currentUser.isEmailVerified();
+                                            if(emailflag == true){
+                                                sendToOrganizer();
+                                                finish();
 
+                                            }else{
+                                                Toast.makeText(MainActivity.this, "Please verify your account", Toast.LENGTH_SHORT).show();
+                                                firebaseAuth.signOut();
+                                            }*/
+                                        } else  {
+                                            sendToAdmin();
                                         }
-
                                     }
                                 });
-
-
-
-
-
                         }else{
-
                             String errorMessage = task.getException().getMessage();
                             Toast.makeText(MainActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
-
                         }
-
                         loginProg.setVisibility(View.INVISIBLE);
-
                     }
-
                 });
-
-
     }
 
    /* protected void onStart() {
@@ -216,6 +238,13 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void sendToForgotPass(){
+        Intent intentstudent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
+        intentstudent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intentstudent);
+        finish();
+    }
+
     /*private void validate(){
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -242,6 +271,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intentregister = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intentregister);
         finish();
+    }
+
+    private void checkEmailVerification() {
+        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+        Boolean emailflag = firebaseUser.isEmailVerified();
+        if(emailflag){
+         finish();
+
+        }else{
+            Toast.makeText(this, "Verify your email", Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
+        }
     }
 
 

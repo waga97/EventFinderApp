@@ -104,8 +104,6 @@ public class StudentRegisterActivity extends AppCompatActivity {
 
                 if(!TextUtils.isEmpty(number) &&!TextUtils.isEmpty(id) &&!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass) & !TextUtils.isEmpty(confirm_pass)){
 
-
-
                     if(pass.equals(confirm_pass)){
 
                         studentregPb.setVisibility(View.VISIBLE);
@@ -126,12 +124,9 @@ public class StudentRegisterActivity extends AppCompatActivity {
                                     userMap.put("number", number);
                                     userMap.put("type", type);
 
-
-
                                     firebaseFirestore.collection("Users").document(RegisteredUserID).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-
                                             if(task.isSuccessful()){
                                                 mAuth.getCurrentUser().sendEmailVerification();
                                                 mAuth.signOut();
@@ -139,40 +134,25 @@ public class StudentRegisterActivity extends AppCompatActivity {
                                                 Intent mainIntent = new Intent(StudentRegisterActivity.this, MainActivity.class);
                                                 startActivity(mainIntent);
                                                 finish();
-
                                             } else {
-
                                                 String error = task.getException().getMessage();
                                                 Toast.makeText(StudentRegisterActivity.this, "Error: " + error, Toast.LENGTH_LONG).show();
-
                                             }
-
                                             studentregPb.setVisibility(View.INVISIBLE);
-
-
-
                                         }
                                     });
-
                                 } else {
-
                                     String errorMessage = task.getException().getMessage();
                                     Toast.makeText(StudentRegisterActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
-
                                 }
                             }
                         });
-
                     } else {
-
                         Toast.makeText(StudentRegisterActivity.this, "Confirm Password and Password Field doesn't match.", Toast.LENGTH_LONG).show();
-
                     }
                 }
             }
         });
-
-
     }
 
 

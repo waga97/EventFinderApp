@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Admin.AdminDashboard">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/admin_dashboard_tb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/actionbar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bgwhite"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/admin_dashboard_tb"
+        app:layout_constraintBottom_toTopOf="@+id/bgblue"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/bgpink"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bgblue"
+        app:srcCompat="@color/colorpink" />
+
+    <ImageView
+        android:id="@+id/bgblue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bgpink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bgwhite"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/pending_btn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bgblue"
+        app:layout_constraintStart_toStartOf="@+id/bgblue"
+        app:layout_constraintTop_toBottomOf="@+id/admin_dashboard_tb"
+        app:srcCompat="@drawable/pending" />
+
+    <ImageView
+        android:id="@+id/approve_btn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bgblue"
+        app:layout_constraintStart_toStartOf="@+id/bgblue"
+        app:layout_constraintTop_toTopOf="@+id/bgblue"
+        app:srcCompat="@drawable/approve" />
+
+    <ImageView
+        android:id="@+id/decline_btn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bgpink"
+        app:layout_constraintStart_toStartOf="@+id/bgblue"
+        app:layout_constraintTop_toBottomOf="@+id/bgblue"
+        app:srcCompat="@drawable/decline" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:text="Pending Event"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/bgblue"
+        app:layout_constraintEnd_toEndOf="@+id/bgwhite"
+        app:layout_constraintStart_toEndOf="@+id/approve_btn" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:text="Approved Event"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/bgblue"
+        app:layout_constraintEnd_toEndOf="@+id/bgblue"
+        app:layout_constraintStart_toEndOf="@+id/approve_btn" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Declined Event"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/bgpink"
+        app:layout_constraintEnd_toEndOf="@+id/bgpink"
+        app:layout_constraintStart_toEndOf="@+id/decline_btn" />
+
+    <TextView
+        android:id="@+id/pending_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/colorAccent"
+        android:textSize="60sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="@+id/bgwhite"
+        app:layout_constraintStart_toEndOf="@+id/pending_btn" />
+
+    <TextView
+        android:id="@+id/approve_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/colorAccent"
+        android:textSize="60sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="@+id/bgblue"
+        app:layout_constraintStart_toEndOf="@+id/approve_btn" />
+
+    <TextView
+        android:id="@+id/decline_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/colorAccent"
+        android:textSize="60sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/bgpink"
+        app:layout_constraintStart_toEndOf="@+id/decline_btn" />
+
+</android.support.constraint.ConstraintLayout>

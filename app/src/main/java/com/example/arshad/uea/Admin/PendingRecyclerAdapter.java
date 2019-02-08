@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -120,13 +121,17 @@ public class PendingRecyclerAdapter extends RecyclerView.Adapter<PendingRecycler
                                 approveMap.put("timestamp", eventTimestamp);
                                 approveMap.put("user_id", eventHost);
 
+                                Calendar calendar = Calendar.getInstance();
+                                int thisMonth = calendar.get(Calendar.MONTH);
+                                final int currentMonth = thisMonth+1;
+
                                 firebaseFirestore.collection("Approved_Events").document(eventPostId).set(approveMap);
+                                firebaseFirestore.collection("Users").document(eventHost).collection("Mine_Approved").document(eventPostId).set(approveMap);
+                                firebaseFirestore.collection("Approved_By_Month").document(String.valueOf(currentMonth)).collection("Month").document(eventPostId).set(approveMap);
 
                                 firebaseFirestore.collection("Pending_Events").document(eventPostId).delete();
                                 event_list.remove(position);
                                 notifyDataSetChanged();
-
-
 
                                 context.startActivity(new Intent (context,AdminHome.class));
                                 Toast.makeText(v.getContext(), "Successfully approved", Toast.LENGTH_SHORT).show();
@@ -164,7 +169,13 @@ public class PendingRecyclerAdapter extends RecyclerView.Adapter<PendingRecycler
                                 declineMap.put("timestamp", eventTimestamp);
                                 declineMap.put("user_id", eventHost);
 
+                                Calendar calendar = Calendar.getInstance();
+                                int thisMonth = calendar.get(Calendar.MONTH);
+                                final int currentMonth = thisMonth+1;
+
                                 firebaseFirestore.collection("Declined_Events").document(eventPostId).set(declineMap);
+                                firebaseFirestore.collection("Users").document(eventHost).collection("Mine_Declined").document(eventPostId).set(declineMap);
+                                firebaseFirestore.collection("Declined_By_Month").document(String.valueOf(currentMonth)).collection("Month").document(eventPostId).set(declineMap);
 
                                 firebaseFirestore.collection("Pending_Events").document(eventPostId).delete();
                                 event_list.remove(position);
@@ -172,7 +183,6 @@ public class PendingRecyclerAdapter extends RecyclerView.Adapter<PendingRecycler
 
                                 context.startActivity(new Intent (context,AdminHome.class));
                                 Toast.makeText(v.getContext(), "Successfully declined", Toast.LENGTH_SHORT).show();
-
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

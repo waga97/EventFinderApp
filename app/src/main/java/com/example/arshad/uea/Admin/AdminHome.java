@@ -116,6 +116,10 @@ public class AdminHome extends AppCompatActivity {
                 sendToDeclined();
                 return true;
 
+            case R.id.dashboard_action:
+                sendToDashboard();
+                return true;
+
             default:
                 return false;
 
@@ -141,6 +145,12 @@ public class AdminHome extends AppCompatActivity {
 
     private void  sendToDeclined (){
         Intent logoutintent = new Intent(AdminHome.this, DeclinedEvent.class);
+        startActivity(logoutintent);
+        finish();
+    }
+
+    private void  sendToDashboard (){
+        Intent logoutintent = new Intent(AdminHome.this, AdminDashboard.class);
         startActivity(logoutintent);
         finish();
     }

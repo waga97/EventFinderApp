@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Admin.ApprovedByMonth">
+
+    <ImageView
+        android:id="@+id/jan_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/mar_iv"
+        app:layout_constraintEnd_toStartOf="@+id/feb_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/feb_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/apr_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/jan_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/mar_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/may_iv"
+        app:layout_constraintEnd_toStartOf="@+id/apr_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jan_iv"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/apr_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/jun_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mar_iv"
+        app:layout_constraintTop_toBottomOf="@+id/feb_iv"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/may_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/jul_iv"
+        app:layout_constraintEnd_toStartOf="@+id/jun_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mar_iv"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/jun_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/aug_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/may_iv"
+        app:layout_constraintTop_toBottomOf="@+id/apr_iv"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/jul_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/sep_iv"
+        app:layout_constraintEnd_toStartOf="@+id/aug_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/may_iv"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/aug_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/oct_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/jul_iv"
+        app:layout_constraintTop_toBottomOf="@+id/jun_iv"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/sep_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nov_iv"
+        app:layout_constraintEnd_toStartOf="@+id/oct_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jul_iv"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/oct_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/dec_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sep_iv"
+        app:layout_constraintTop_toBottomOf="@+id/aug_iv"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/nov_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/back_btn"
+        app:layout_constraintEnd_toStartOf="@+id/dec_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sep_iv"
+        app:srcCompat="@color/blueone" />
+
+    <ImageView
+        android:id="@+id/dec_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/back_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nov_iv"
+        app:layout_constraintTop_toBottomOf="@+id/oct_iv"
+        app:srcCompat="@android:color/white" />
+
+    <TextView
+        android:id="@+id/jan_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="January"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/jan_iv"
+        app:layout_constraintEnd_toStartOf="@+id/feb_iv"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/jan_iv" />
+
+    <TextView
+        android:id="@+id/feb_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="February"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/apr_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/feb_iv" />
+
+    <TextView
+        android:id="@+id/mar_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="March"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/may_iv"
+        app:layout_constraintEnd_toStartOf="@+id/apr_iv"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/mar_iv" />
+
+    <TextView
+        android:id="@+id/apr_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="April"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/jun_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/apr_iv" />
+
+    <TextView
+        android:id="@+id/may_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="May"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/jul_iv"
+        app:layout_constraintEnd_toStartOf="@+id/jun_iv"
+        app:layout_constraintStart_toStartOf="@+id/may_iv" />
+
+    <TextView
+        android:id="@+id/jun_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="June"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/aug_iv"
+        app:layout_constraintEnd_toEndOf="@+id/jun_iv"
+        app:layout_constraintStart_toStartOf="@+id/jun_iv" />
+
+    <TextView
+        android:id="@+id/jul_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="July"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/jul_iv"
+        app:layout_constraintEnd_toEndOf="@+id/jul_iv"
+        app:layout_constraintStart_toStartOf="@+id/jul_iv" />
+
+    <TextView
+        android:id="@+id/aug_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="August"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/oct_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/jul_iv" />
+
+    <TextView
+        android:id="@+id/sep_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="September"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/nov_iv"
+        app:layout_constraintEnd_toEndOf="@+id/sep_iv"
+        app:layout_constraintStart_toStartOf="@+id/sep_iv" />
+
+    <TextView
+        android:id="@+id/oct_tv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="October"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/dec_iv"
+        app:layout_constraintEnd_toEndOf="@+id/oct_iv"
+        app:layout_constraintStart_toStartOf="@+id/oct_iv" />
+
+    <TextView
+        android:id="@+id/nov_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="November"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/nov_iv"
+        app:layout_constraintEnd_toStartOf="@+id/dec_iv"
+        app:layout_constraintStart_toStartOf="@+id/nov_iv" />
+
+    <TextView
+        android:id="@+id/dec_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="December"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/dec_iv"
+        app:layout_constraintEnd_toEndOf="@+id/dec_iv"
+        app:layout_constraintStart_toStartOf="@+id/dec_iv" />
+
+    <TextView
+        android:id="@+id/jan_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/jan_tv"
+        app:layout_constraintEnd_toStartOf="@+id/feb_iv"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="@+id/jan_iv" />
+
+    <TextView
+        android:id="@+id/feb_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/feb_tv"
+        app:layout_constraintEnd_toEndOf="@+id/feb_iv"
+        app:layout_constraintStart_toStartOf="@+id/feb_iv" />
+
+    <TextView
+        android:id="@+id/mar_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mar_tv"
+        app:layout_constraintEnd_toStartOf="@+id/apr_iv"
+        app:layout_constraintStart_toStartOf="@+id/mar_iv" />
+
+    <TextView
+        android:id="@+id/apr_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/apr_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/apr_iv" />
+
+    <TextView
+        android:id="@+id/may_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/may_tv"
+        app:layout_constraintEnd_toStartOf="@+id/jun_iv"
+        app:layout_constraintStart_toStartOf="@+id/may_iv" />
+
+    <TextView
+        android:id="@+id/jun_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/jun_tv"
+        app:layout_constraintEnd_toEndOf="@+id/jun_iv"
+        app:layout_constraintStart_toStartOf="@+id/jun_iv" />
+
+    <TextView
+        android:id="@+id/jul_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/jul_tv"
+        app:layout_constraintEnd_toEndOf="@+id/jul_iv"
+        app:layout_constraintStart_toStartOf="@+id/jul_iv" />
+
+    <TextView
+        android:id="@+id/aug_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/aug_tv"
+        app:layout_constraintEnd_toEndOf="@+id/aug_iv"
+        app:layout_constraintStart_toEndOf="@+id/jul_iv" />
+
+    <TextView
+        android:id="@+id/sep_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/sep_tv"
+        app:layout_constraintEnd_toStartOf="@+id/oct_iv"
+        app:layout_constraintStart_toStartOf="@+id/sep_iv" />
+
+    <TextView
+        android:id="@+id/oct_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/oct_tv"
+        app:layout_constraintEnd_toEndOf="@+id/oct_iv"
+        app:layout_constraintStart_toStartOf="@+id/oct_iv" />
+
+    <TextView
+        android:id="@+id/nov_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nov_tv"
+        app:layout_constraintEnd_toStartOf="@+id/dec_iv"
+        app:layout_constraintStart_toStartOf="@+id/nov_iv" />
+
+    <TextView
+        android:id="@+id/dec_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dec_tv"
+        app:layout_constraintEnd_toEndOf="@+id/dec_iv"
+        app:layout_constraintStart_toStartOf="@+id/dec_iv" />
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/roundedbutton2"
+        android:text="Back"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>
