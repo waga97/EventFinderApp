@@ -1,15 +1,21 @@
 package com.example.arshad.uea.Student;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +31,12 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,16 +71,18 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
 
         holder.setIsRecyclable(false);
 
+        final boolean[] isImageFitToScreen = new boolean[1];
+
         final String eventPostId = event_list.get(position).EventPostId;
         final String currentUserId = firebaseAuth.getCurrentUser().getUid();
 
-        String name_data = event_list.get(position).getName();
+        final String name_data = event_list.get(position).getName();
         holder.setNameText(name_data);
 
-        String date_data = event_list.get(position).getDate();
+        final String date_data = event_list.get(position).getDate();
         holder.setDateText(date_data);
 
-        String time_data = event_list.get(position).getTime();
+        final String time_data = event_list.get(position).getTime();
         holder.setTimeText(time_data);
 
         String venue_data = event_list.get(position).getVenue();
@@ -118,15 +131,15 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
 
         }
 
-        //Get Likes
-        firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        //Get Register
+        firebaseFirestore.collection("Approved_Events/" + eventPostId + "/Participant").document(currentUserId).addSnapshotListener((StudentHome) context, new EventListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
 
                 if(documentSnapshot.exists()){
 
-                    holder.eventRegisterBtn.setImageDrawable(context.getDrawable(R.mipmap.registered));
+                    holder.eventRegisterBtn.setImageDrawable(context.getDrawable(R.mipmap.register_blue));
 
 
                 } else {
@@ -140,27 +153,37 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
             }
         });
 
-        //Likes Feature
+        //Register Feature
         holder.eventRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                firebaseFirestore.collection("Approved_Events/" + eventPostId + "/Participant").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                         if(!task.getResult().exists()){
 
-                            Map<String, Object> likesMap = new HashMap<>();
-                            likesMap.put("user_id", currentUserId);
-                            likesMap.put("timestamp", FieldValue.serverTimestamp());
+                            Map<String, Object> participateMap = new HashMap<>();
+                            participateMap.put("user_id", currentUserId);
+                            participateMap.put("timestamp", FieldValue.serverTimestamp());
 
-                            firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).set(likesMap);
+                            Map<String, Object> registerMap = new HashMap<>();
+                            registerMap.put("event_id", eventPostId);
+                            registerMap.put("name", name_data);
+                            registerMap.put("date", date_data);
+                            registerMap.put("time", time_data);
+                            registerMap.put("venue", eventPostId);
+                            registerMap.put("timestamp", FieldValue.serverTimestamp());
+
+                            firebaseFirestore.collection("Approved_Events/" + eventPostId + "/Participant").document(currentUserId).set(participateMap);
+                            firebaseFirestore.collection("Users/" + currentUserId + "/Register").document(eventPostId).set(registerMap);
                             Toast.makeText(v.getContext(), "Successfully registered", Toast.LENGTH_SHORT).show();
 
                         } else {
 
-                            firebaseFirestore.collection("Events/" + eventPostId + "/Register").document(currentUserId).delete();
+                            firebaseFirestore.collection("Approved_Events/" + eventPostId + "/Participant").document(currentUserId).delete();
+                            firebaseFirestore.collection("Users/" + currentUserId + "/Register").document(eventPostId).delete();
                             Toast.makeText(v.getContext(), "Successfully unregistered", Toast.LENGTH_SHORT).show();
 
                         }
@@ -170,8 +193,24 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
             }
         });
 
+        firebaseFirestore.collection("Approved_Events/" + eventPostId + "/Participant").addSnapshotListener((StudentHome) context, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
+                if(!documentSnapshots.isEmpty()){
 
+                    int count = documentSnapshots.size();
+
+                    holder.updateLikesCount(count);
+
+                } else {
+
+                    holder.updateLikesCount(0);
+
+                }
+
+            }
+        });
 
 
 
@@ -194,6 +233,7 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
         private TextView timeView;
         private TextView venueView;
         private TextView descView;
+        private TextView favLikeCount;
 
         private TextView eventDate;
 
@@ -212,7 +252,7 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
             mView = itemView;
 
             eventRegisterBtn = mView.findViewById(R.id.event_register_btn);
-
+            imageView = mView.findViewById(R.id.event_image);
 
         }
 
@@ -222,7 +262,7 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
 
         public void setNameText(String nameText){
 
-            nameView = mView.findViewById(R.id.name);
+            nameView = mView.findViewById(R.id.a);
             nameView.setText(nameText);
 
         }
@@ -265,7 +305,7 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
         }
 
         public void setUserData(String name){
-            eventUserName = mView.findViewById(R.id.event_name);
+            eventUserName = mView.findViewById(R.id.event_host_name);
             eventUserName.setText(name);
 
         }
@@ -281,9 +321,68 @@ public class StudentEventRecyclerAdapter extends RecyclerView.Adapter<StudentEve
 
         }
 
+        public void updateLikesCount(int count){
+
+            favLikeCount = mView.findViewById(R.id.register_count);
+            favLikeCount.setText(count + " Registered");
+
+        }
+
 
 
     }
 
 
+
+
 }
+
+
+/*
+if(!task.getResult().exists()){
+
+                            Map<String, Object> participantsMap = new HashMap<>();
+                            participantsMap.put("user_id", currentUserId);
+                            participantsMap.put("timestamp", FieldValue.serverTimestamp());
+
+
+                            Map<String, Object> registerMap = new HashMap<>();
+                            registerMap.put("event_id", eventPostId);
+                            registerMap.put("timestamp", FieldValue.serverTimestamp());
+
+
+
+                            firebaseFirestore.collection("Events/" + eventPostId + "Participant/").document(currentUserId).set(participantsMap);
+                            firebaseFirestore.collection("Users/" + currentUserId + "/Register").document(eventPostId).set(registerMap);
+                            Toast.makeText(v.getContext(), "Successfully registered", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            firebaseFirestore.collection("Events/" + eventPostId + "Participant/").document(currentUserId).delete();
+                            firebaseFirestore.collection("Users/" + currentUserId + "/Register").document(eventPostId).delete();
+                            Toast.makeText(v.getContext(), "Successfully unregistered", Toast.LENGTH_SHORT).show();
+
+                        }
+ */
+
+
+/*
+holder.imageView.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(final View v) {
+
+        if(isImageFitToScreen[0]) {
+        isImageFitToScreen[0] =false;
+        holder.imageView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
+        holder.imageView.setAdjustViewBounds(true);
+        }else{
+        isImageFitToScreen[0] =true;
+        holder.imageView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT));
+        holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+
+
+
+        }
+        });
+*/
